@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+}
+
+#mainBoard {
+    display:grid;
+    grid-template-columns: repeat(5,1fr);
+
+}
+
+.tile {
+    width: 150px;
+    height: 150px;
+    border: 3px solid crimson;
+}
+
+.tile[status="true"] {
+    background-color: red;
+}
