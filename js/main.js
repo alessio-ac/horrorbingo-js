@@ -2,16 +2,9 @@ import { supabase } from './supabase-connect.js'
 
 const board = document.getElementById('mainBoard')
 
-/* async function updateTile() {
-    const { data, error } = await supabase.rpc('flip_bool', {'tile_id': 2})
-    if (error) { console.log(error) }
-    console.log(data)
-} */
-
-
 async function initializeGame() {
     const { data, error } = await supabase
-        .from('bingotest')
+        .from('live_board')
         .select('tile, status')
         .order('id')
 
@@ -20,18 +13,68 @@ async function initializeGame() {
     }
 
     console.log("Board fetched successfully")
-    let i = 0
+    let i = 1
     board.innerHTML = ""
     Object.values(data).forEach(item => {
         const tileDiv = document.createElement('div')
-        tileDiv.setAttribute('id', i)
+        const fuseOverlay = document.createElement('img')
+        tileDiv.setAttribute('id', "tile-" + i)
         i++
         tileDiv.classList.add('tile')
         tileDiv.textContent = Object.values(item)[0]
         tileDiv.setAttribute("status", Object.values(item)[1])
+        fuseOverlay.classList.add('fuse-overlay')
+        fuseOverlay.setAttribute('src', 'fuse-1.svg')
+        tileDiv.appendChild(fuseOverlay)
         board.appendChild(tileDiv)
     })
 }
+
+async function toggleTile(payload) {
+    const payloadId =  Object.values(payload)[4]['id']
+    const payloadStatus =  Object.values(payload)[4]['status']
+    const tileDiv = document.getElementById("tile-" + payloadId)
+    tileDiv.setAttribute("status", payloadStatus)
+}
+
+const myChannel = supabase.channel('live_board')
+const broadcastChannel = supabase.channel('test-channel')
+
+myChannel.on(
+    'postgres_changes',
+    { event: '*', schema: 'public', table: 'live_board' },
+    payload => {
+        console.log("Realtime payload is working", Object.values(payload));
+/*         fetchData().then(tiles => displayTiles(tiles)) */
+        toggleTile(payload)
+    } 
+)
+.subscribe(status => {
+    if (status === 'SUBSCRIBED') {
+        console.log("Channel subscribed");
+    } else if (status === "ERROR") {
+        console.error("subsription error")
+    }
+});
+
+function messageReceived(payload) {
+    console.log(payload)
+}
+
+initializeGame()
+
+/* broadcastChannel.on(
+    'broadcast',
+    { event: '*' },
+    (payload) => messageReceived(payload)
+).subscribe(status => {
+    if (status === 'SUBSCRIBED') {
+        console.log("test subscribed");
+    } else if (status === "ERROR") {
+        console.error("test error")
+    }
+})
+ */
 
 /* async function fetchData() {
     const { data, error } = await supabase
@@ -58,39 +101,3 @@ function displayTiles(tiles) {
 }
 
 fetchData().then(tiles => displayTiles(tiles)) */
-
-const myChannel = supabase.channel('bingotest')
-const broadcastChannel = supabase.channel('test-channel')
-
-myChannel.on(
-    'postgres_changes',
-    { event: '*', schema: 'public', table: 'bingotest' },
-    payload => {
-        console.log("Realtime payload is working", payload);
-/*         fetchData().then(tiles => displayTiles(tiles)) */
-        initializeGame()
-    } 
-)
-.subscribe(status => {
-    if (status === 'SUBSCRIBED') {
-        console.log("Channel subscribed");
-    } else if (status === "ERROR") {
-        console.error("subsription error")
-    }
-});
-
-function messageReceived(payload) {
-    console.log(payload)
-}
-
-broadcastChannel.on(
-    'broadcast',
-    { event: '*' },
-    (payload) => messageReceived(payload)
-).subscribe(status => {
-    if (status === 'SUBSCRIBED') {
-        console.log("test subscribed");
-    } else if (status === "ERROR") {
-        console.error("test error")
-    }
-})
