@@ -1,9 +1,9 @@
 import { supabase } from './supabase-connect.js'
- import { playAudio, createTile, createOverlay, createDialog } from './functions.js'
- 
+import { playAudio, createTile, createOverlay, createDialog } from './functions.js'
+
 const board = document.getElementById('mainBoard')
 
-// Fetch the board and create each element, should only be called on page load
+// Fetch the tiles from DB and create elements 
 async function initializeGame() {
     const { data, error } = await supabase
         .from('live_board')
@@ -21,30 +21,25 @@ async function initializeGame() {
     const dialogContainer = document.getElementById('dialog-container')
 
     Object.values(data).forEach(item => {
-        const tileDiv = createTile(item, i, Object.values(item)[1])
+        const tileDiv = createTile(item, i, 'false')
         tileDiv.appendChild(createOverlay())
         const dialogObjects = createDialog(item, i)
+        const tileId = i
         tileDiv.addEventListener('click', () => {
-            dialogObjects[0].showModal()
+            toggleTile(tileId)
         })
         board.appendChild(tileDiv)
 
-
-/*         // Create the divs for the tiles
-        const tileDiv = document.createElement('div')
+ /*        const tileDiv = document.createElement('div')
         tileDiv.setAttribute('id', "tile-" + i)
         tileDiv.classList.add('tile')
         tileDiv.textContent = Object.values(item)[0]
-        tileDiv.setAttribute("status", Object.values(item)[1])
+        tileDiv.setAttribute("status", 'false')
 
-        // Create the fuse overlay
         const fuseOverlay = document.createElement('img')
         fuseOverlay.classList.add('fuse-overlay')
         fuseOverlay.setAttribute('src', 'fuse-1.svg')
 
-        tileDiv.appendChild(fuseOverlay)
-
-        // Create popup dialogs
         const descripitonDialog = document.createElement('dialog')
 
         descripitonDialog.setAttribute('id', 'dialog-' + i)
@@ -55,16 +50,28 @@ async function initializeGame() {
         dialogCloseButton.classList.add('dialog-close')
         dialogCloseButton.innerHTML = 'Chiudi'
 
-        tileDiv.addEventListener('click', () => {
+        const dialogOpenButton = document.createElement('button')
+        dialogOpenButton.classList.add('dialog-open')
+        dialogOpenButton.innerHTML = 'i'
+
+        dialogOpenButton.addEventListener('click', () => {
             descripitonDialog.showModal()
         })
-    
+
         dialogCloseButton.addEventListener('click', () => {
             descripitonDialog.close()
         })
 
         descripitonDialog.appendChild(dialogCloseButton)
 
+        const tileId = i
+
+        tileDiv.addEventListener('click', () => {
+            toggleTile(tileId)
+            console.log(tileId)
+        })
+
+        tileDiv.appendChild(fuseOverlay)
         board.appendChild(tileDiv)
 
         console.log(Object.values(item)) */
@@ -72,33 +79,32 @@ async function initializeGame() {
     })
 }
 
-// Visually toggle each tile (nothing to do with DB)
-async function toggleTile(payload) {
-    const payloadId =  Object.values(payload)[4]['id']
-    const payloadStatus =  Object.values(payload)[4]['status']
-    const tileDiv = document.getElementById("tile-" + payloadId)
-    tileDiv.setAttribute("status", payloadStatus)
-    if (payloadStatus) { playAudio() }
+async function toggleTile(tileId) {
+    const tileDiv = document.getElementById("tile-" + tileId)
+    const tileStatus = tileDiv.getAttribute('status')
+    if (tileStatus == 'true') {
+        tileDiv.setAttribute("status", 'false')
+    } else if (tileStatus == 'false') {
+        tileDiv.setAttribute("status", 'true')
+        playAudio()
+    }
 }
 
-// Realtime subscription to visually toggle the tiles 
-const myChannel = supabase.channel('live_board')
+const mainBoard = document.getElementById('mainBoard');
+const divs = mainBoard.querySelectorAll('div')
 
-myChannel.on(
-    'postgres_changes',
-    { event: '*', schema: 'public', table: 'live_board' },
-    payload => {
-        console.log("Realtime payload is working", Object.values(payload));
-/*         fetchData().then(tiles => displayTiles(tiles)) */
-        toggleTile(payload)
-    } 
-)
-.subscribe(status => {
-    if (status === 'SUBSCRIBED') {
-        console.log("Channel subscribed");
-    } else if (status === "ERROR") {
-        console.error("subsription error")
-    }
-});
+/* function resizeText() {
+    childDivs.forEach(div => {
+        let fontSize = 100; // Start with a large font size
+        div.style.fontSize = fontSize + 'px';
+
+        while (div.scrollHeight > div.clientHeight || div.scrollWidth > div.clientWidth) {
+            fontSize--;
+            div.style.fontSize = fontSize + 'px';
+        }
+    });
+} */
 
 initializeGame()
+/* resizeText()
+ */

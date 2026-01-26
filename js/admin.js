@@ -5,44 +5,21 @@ async function supaLogout() {
     if (error) { console.log(error) }
 }
 
-document.getElementById('login-form').addEventListener('submit', async e => {
-    e.preventDefault()
-
-    const status = document.getElementById("login-status")
-
-    const email = e.target.email.value
-    const password = e.target.password.value
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-    })
-    if (error) {
-        console.log(error)
-        status.textContent = "Failed to log in."
-    } else console.log(data)
-    status.textContent = "Successfully logged in."
-})
-
-document.getElementById('logout').addEventListener('click', supaLogout)
-/* document.getElementById('login').addEventListener('click', supaSignIn) */
-
-
+// Flip the status of the tile on DB
 async function updateTile(tileId) {
     const { data, error } = await supabase.rpc('flip_bool', { 'tile_id': tileId })
     if (error) { console.log(error) }
     console.log(data)
 }
 
+// Call postgres function to get new tiles
 async function refreshBoard() {
     const { error } = await supabase.rpc('refresh_live_board_tiles')
     if (error) { console.log(error) }
     console.log("refresh!")
 }
 
-/* document.getElementById('updateTile').addEventListener('click', updateTile)
- */
- 
+// Create the manager for the admin page
 async function createBoardManager() {
     const { data, error } = await supabase
         .from('live_board')
@@ -75,6 +52,31 @@ async function createBoardManager() {
 
     listDiv.appendChild(tileList)
 }
+
+// Login stuff
+
+document.getElementById('login-form').addEventListener('submit', async e => {
+    e.preventDefault()
+
+    const status = document.getElementById("login-status")
+
+    const email = e.target.email.value
+    const password = e.target.password.value
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+    })
+    if (error) {
+        console.log(error)
+        status.textContent = "Failed to log in."
+    } else console.log(data)
+    status.textContent = "Successfully logged in."
+})
+
+document.getElementById('logout').addEventListener('click', supaLogout)
+
+// End of login stuff
 
 const newBoardButton = document.getElementById('refresh-board')
 newBoardButton.addEventListener('click', refreshBoard)

@@ -19,6 +19,10 @@ html {
 * {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-select: none;
+  -moz-user-drag: none;
 }
 
 body {
@@ -28,7 +32,6 @@ body {
     var(--main-bg2)
   );
   font-family: Silkscreen;
-  user-select: none;
 }
 
 .main {
@@ -43,7 +46,7 @@ body {
   }
 }
 
-.banner {
+.desktop {
   display: flex;
   flex-direction: row;
   align-self: flex-start;
@@ -56,25 +59,66 @@ body {
   border-bottom: 0px solid var(--main-bg2);
   margin-bottom: 15px;
   margin-top: 5px;
+  gap: 10px;
 }
 
-.banner p:last-child {
+.desktop p:last-child {
   margin-left: auto;
   margin-right: 2%;
   margin-bottom: 4%;
   text-align: right;
 }
 
+
+.mobile-logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: -50px;
+}
+
+.mobile-logo img {
+  width: 45vw;
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  line-height: 1;
+}
+
+.mobile-menu p {
+  color: var(--foreground)
+}
+
+.mobile-menu a {
+  line-height: 2;
+} 
+
 .title {
-  font-family: "Bungee Tint";
   font-size: clamp(24px, 5vh, 80px);
-  color: var(--foreground);
+  color: var(--accent);
   margin-left: 0%;
 }
 
 .logo {
   width: 20%;
   object-fit: contain;
+}
+
+a:link {
+  color: var(--main-bg1)
+}
+
+a:visited {
+  color: var(--)
+}
+
+a:hover {
+  color: var(--foreground)
 }
 
 /* #mainBoard {
@@ -105,6 +149,7 @@ body {
   aspect-ratio: 1 / 1;
   padding: 4px;
   grid-template-columns: repeat(5, minmax(0px, 1fr));
+  flex-wrap: wrap;
 }
 
 .tile {
@@ -115,13 +160,44 @@ body {
   overflow-y: scroll;
   overflow-x: hidden;
   color: var(--foreground);
-  font-size: 100%;
-  align-items: center;
+/*   font-size:calc(1vw);
+ */    /*   font-size: clamp(16px, calc(20px + (36–20) * (100vw - 768px)/(1920–768)), 48px);
+ */  align-items: center;
   justify-content: center;
   text-align: center;
   transition: transform 0.1s ease;
   z-index: 0;
   background-color: var(--window-bg);
+  padding: 10%;
+}
+
+/* Portrait */
+@media screen and (orientation:portrait) {
+  .tile {
+    font-size: 2vw;
+  }
+  .mobile {
+    display: block;
+  }
+  .desktop {
+    display: none
+  }
+}
+/* Landscape */
+@media screen and (orientation:landscape) {
+  .tile {
+    font-size: clamp(18px, 1.5vh, 80px);
+  }
+  .mobile {
+    display: none;
+  }
+}
+
+#tile-13 {
+  background-color: var(--main-bg1);
+  .fuse-overlay {
+    display: none;
+  }
 }
 
 .tile:hover {
@@ -139,6 +215,15 @@ body {
   }
 }
 
+@keyframes flash {
+  from {
+    filter: contrast(0%)
+  }
+  to {
+    filter: contrast(100%)
+  }
+}
+
 .fuse-overlay {
   position: absolute;
   width: 80%;
@@ -152,6 +237,88 @@ body {
   transition-duration: 0.1s;
   .fuse-overlay {
     opacity: 1;
-    animation: spin 0.9s linear forwards;
+    animation: spin 0.9s linear forwards, flash 3s linear;
   }
+}
+
+#dialog-container {
+    display: flex;
+    position: absolute;
+    color: var(--foreground);
+    z-index: 20;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+}
+
+dialog {
+    opacity: 1;
+    position: absolute;
+    color: var(--foreground);
+    text-align: center;
+    transition: transform 0.1s ease;
+    background-color: #bd09ab;
+    animation: fade-out 0.3s ease-out;
+    font-size: clamp(24px, 3vh, 80px);
+}
+
+dialog:open {
+  animation: fade-in 0.1s ease-out;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+    display: none;
+  }
+
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+    display: block;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: scaleY(1);
+    display: block;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleY(0);
+    display: none;
+  }
+}
+
+.dialog-close {
+  font-family: Silkscreen;
+  background-color: var(--foreground);
+  border: solid 2px black;
+  font-size: 12px;
+  padding: 5px;
+  margin-top: 1rem;
+}
+
+.dialog-open {
+  font-family: Silkscreen;
+  background-color: #cccccc64;
+  color: var(--foreground);
+  border: solid 1px white;
+  font-size: 12px;
+  padding: 5px;
+  margin-top: 1rem;
+  border-radius: 100%;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 130px;
+  margin-left: 120px;
+  position: absolute;
+
+}
+
+.dialog-open:hover {
+  background-color: var(--main-bg2);
 }
