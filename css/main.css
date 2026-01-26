@@ -5,6 +5,12 @@
   --accent: #bd09ab;
   --foreground: #cecece;
   --tile-bg: #1c1c1c;
+  --ink-black: #040316ff;
+  --wisteria: #BBA9DCff;
+  --orchid-mist: #C066BEff;
+  --soft-periwinkle: #7C89E1ff;
+  --prussian-blue: #13264Aff;
+
 }
 
 html {
@@ -26,12 +32,31 @@ html {
 }
 
 body {
-  background-image: linear-gradient(
+/*   background-image: linear-gradient(
     to bottom,
     var(--main-bg1),
     var(--main-bg2)
-  );
+  ); */
+  background: linear-gradient(-45deg, var(--main-bg1), var(--main-bg2));
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
   font-family: Silkscreen;
+}
+
+a {
+  text-decoration: none;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 .main {
@@ -42,8 +67,6 @@ body {
   border: var(--accent) solid 2px;
   height: 98vh;
   overflow: hidden;
-  @media (min-width: 640px) {
-  }
 }
 
 .desktop {
@@ -60,6 +83,11 @@ body {
   margin-bottom: 15px;
   margin-top: 5px;
   gap: 10px;
+}
+
+.desktop a {
+  margin-right: 10px;
+  margin-top: 10px;
 }
 
 .desktop p:last-child {
@@ -105,7 +133,7 @@ body {
 }
 
 .logo {
-  width: 20%;
+  width: 40vh;
   object-fit: contain;
 }
 
@@ -167,34 +195,12 @@ a:hover {
   text-align: center;
   transition: transform 0.1s ease;
   z-index: 0;
-  background-color: var(--window-bg);
+  background-color: #140123;
   padding: 10%;
 }
 
-/* Portrait */
-@media screen and (orientation:portrait) {
-  .tile {
-    font-size: 2vw;
-  }
-  .mobile {
-    display: block;
-  }
-  .desktop {
-    display: none
-  }
-}
-/* Landscape */
-@media screen and (orientation:landscape) {
-  .tile {
-    font-size: clamp(18px, 1.5vh, 80px);
-  }
-  .mobile {
-    display: none;
-  }
-}
-
 #tile-13 {
-  background-color: var(--main-bg1);
+  background-color: #79046d;
   .fuse-overlay {
     display: none;
   }
@@ -233,7 +239,7 @@ a:hover {
 }
 
 .tile[status="true"] {
-  background-color: var(--main-bg2);
+  background-color: #390750;
   transition-duration: 0.1s;
   .fuse-overlay {
     opacity: 1;
@@ -257,13 +263,18 @@ dialog {
     color: var(--foreground);
     text-align: center;
     transition: transform 0.1s ease;
-    background-color: #bd09ab;
+    background-color: var(--ink-black);
     animation: fade-out 0.3s ease-out;
-    font-size: clamp(24px, 3vh, 80px);
+    font-size: clamp(18px, 3vh, 80px);
+    max-width: 80vw;
 }
 
 dialog:open {
   animation: fade-in 0.1s ease-out;
+}
+
+dialog::backdrop {
+  background-color: #00000062;
 }
 
 @keyframes fade-in {
@@ -298,7 +309,7 @@ dialog:open {
   font-family: Silkscreen;
   background-color: var(--foreground);
   border: solid 2px black;
-  font-size: 12px;
+  font-size: 15px;
   padding: 5px;
   margin-top: 1rem;
 }
@@ -321,4 +332,38 @@ dialog:open {
 
 .dialog-open:hover {
   background-color: var(--main-bg2);
+}
+
+.highlight {
+  color: var(--accent)
+}
+
+/* Portrait */
+@media screen and (orientation:portrait) {
+  .tile {
+    font-size: 2.5vw;
+  }
+  .mobile {
+    display: block;
+  }
+  .desktop {
+    display: none
+  }
+  dialog {
+    width: 70vw;
+    font-size: 14px;
+  }
+}
+/* Landscape */
+@media screen and (orientation:landscape) {
+  .tile {
+    font-size: clamp(18px, 1.5vh, 0px);
+  }
+  .mobile {
+    display: none;
+  }
+  #info-dialog {
+    width: 40vw;
+    font-size: clamp(18px, 2.4vh, 60px);
+  }
 }

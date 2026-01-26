@@ -1,5 +1,5 @@
 import { supabase } from './supabase-connect.js'
- import { playAudio, createTile, createOverlay, createDialog } from './functions.js'
+import { playAudio, addMenuDialog, createTile, createOverlay, createDialog } from './functions.js'
  
 const board = document.getElementById('mainBoard')
 
@@ -26,48 +26,9 @@ async function initializeGame() {
         const dialogObjects = createDialog(item, i)
         tileDiv.addEventListener('click', () => {
             dialogObjects[0].showModal()
+            playAudio('dialog-audio')
         })
         board.appendChild(tileDiv)
-
-
-/*         // Create the divs for the tiles
-        const tileDiv = document.createElement('div')
-        tileDiv.setAttribute('id', "tile-" + i)
-        tileDiv.classList.add('tile')
-        tileDiv.textContent = Object.values(item)[0]
-        tileDiv.setAttribute("status", Object.values(item)[1])
-
-        // Create the fuse overlay
-        const fuseOverlay = document.createElement('img')
-        fuseOverlay.classList.add('fuse-overlay')
-        fuseOverlay.setAttribute('src', 'fuse-1.svg')
-
-        tileDiv.appendChild(fuseOverlay)
-
-        // Create popup dialogs
-        const descripitonDialog = document.createElement('dialog')
-
-        descripitonDialog.setAttribute('id', 'dialog-' + i)
-        descripitonDialog.innerHTML = Object.values(item)[2] + '<br>'
-        dialogContainer.appendChild(descripitonDialog)
-
-        const dialogCloseButton = document.createElement('button')
-        dialogCloseButton.classList.add('dialog-close')
-        dialogCloseButton.innerHTML = 'Chiudi'
-
-        tileDiv.addEventListener('click', () => {
-            descripitonDialog.showModal()
-        })
-    
-        dialogCloseButton.addEventListener('click', () => {
-            descripitonDialog.close()
-        })
-
-        descripitonDialog.appendChild(dialogCloseButton)
-
-        board.appendChild(tileDiv)
-
-        console.log(Object.values(item)) */
         i++
     })
 }
@@ -78,7 +39,7 @@ async function toggleTile(payload) {
     const payloadStatus =  Object.values(payload)[4]['status']
     const tileDiv = document.getElementById("tile-" + payloadId)
     tileDiv.setAttribute("status", payloadStatus)
-    if (payloadStatus) { playAudio() }
+    if (payloadStatus) { playAudio('tile-audio') }
 }
 
 // Realtime subscription to visually toggle the tiles 
@@ -102,3 +63,5 @@ myChannel.on(
 });
 
 initializeGame()
+addMenuDialog('info-dialog', '.info-button')
+document.getElementById('info-dialog').showModal()
