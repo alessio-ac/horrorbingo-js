@@ -4,30 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horrorbingo</title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/admin.css">
     <script src="js/supabase-connect.js" type="module"></script>
-    <script src="js/main.js" type="module"></script>
     <script src="js/admin.js" type="module"></script>
-
-<!--     <script src="js/admin.js" type="module"></script>
- --></head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
 <body>
     <h1>Horrrobingo Admin Page</h1>
-    <div class="container">
-        <div id="mainBoard"></div>
-    </div>
     <div id="login-div">
         <form id="login-form">
             <input type="email" id="email" placeholder="Email" Required>
             <input type="passwod" id="password" placeholder="Password" Required>
             <button type="submit">Log in</button>
+            <button id="logout">logout</button>
         </form>
         <div id="login-status"></div>
-        <button id="logout">logout</button>
     </div>
     <div id="adminDiv">
         <div id="listDiv"></div>
         <button id="refresh-board">Refresh</button>
     </div>
+    <div class="container">
+        <div id="mainBoard"></div>
+    </div>
+    <div id="dialog-container">
 </body>
 </html>

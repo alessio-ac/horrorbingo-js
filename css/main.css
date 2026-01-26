@@ -65,8 +65,9 @@ a {
   align-items: center;
   background-color: var(--window-bg);
   border: var(--accent) solid 2px;
-  height: 98vh;
+  height: 97vh;
   overflow: hidden;
+  margin: 10px;
 }
 
 .desktop {
@@ -264,7 +265,6 @@ dialog {
     text-align: center;
     transition: transform 0.1s ease;
     background-color: var(--ink-black);
-    animation: fade-out 0.3s ease-out;
     font-size: clamp(18px, 3vh, 80px);
     max-width: 80vw;
 }
@@ -288,20 +288,6 @@ dialog::backdrop {
     opacity: 1;
     transform: scaleY(1);
     display: block;
-  }
-}
-
-@keyframes fade-out {
-  0% {
-    opacity: 1;
-    transform: scaleY(1);
-    display: block;
-  }
-
-  100% {
-    opacity: 0;
-    transform: scaleY(0);
-    display: none;
   }
 }
 
@@ -353,7 +339,11 @@ dialog::backdrop {
     width: 70vw;
     font-size: 14px;
   }
+  .main {
+    margin: 0px;
+  }
 }
+
 /* Landscape */
 @media screen and (orientation:landscape) {
   .tile {

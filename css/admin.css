@@ -1,0 +1,68 @@
+:root {
+    --main-bg1: #08225a;
+    --main-bg2: #40033c;
+    --window-bg: #110318;
+    --accent: #bd09ab;
+    --foreground: #cecece;
+    --tile-bg: #1c1c1c;
+    --ink-black: #040316ff;
+    --wisteria: #BBA9DCff;
+    --orchid-mist: #C066BEff;
+    --soft-periwinkle: #7C89E1ff;
+    --prussian-blue: #13264Aff;
+  
+}
+
+* {
+    font-family: Roboto;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-color: var(--window-bg);
+    color: var(--foreground);
+}
+
+li {
+    padding: 3px;
+}
+
+ul {
+    button {
+        margin-right: 10px;
+        height: 50px;
+    }
+}
+
+button {
+    background-color: var(--foreground);
+    color: var(--ink-black)
+}
+
+#refresh-board,
+#logout {
+    display: none;
+}
+
+#login-form {
+    button {
+        margin-top: 10px;
+    }
+}
+
+/* Portrait */
+@media screen and (orientation:portrait) {
+    ul {
+        column-count: 1;
+    }
+}
+
+/* Landscape */
+@media screen and (orientation:landscape) {
+    ul {
+        column-count: 2;
+    }
+}
