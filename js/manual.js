@@ -28,6 +28,11 @@ async function initializeGame() {
         tileDiv.addEventListener('click', () => {
             toggleTile(tileId)
         })
+        tileDiv.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+            dialogObjects[0].showModal()
+            playAudio('dialog-audio')
+        })
         board.appendChild(tileDiv)
         i++
     })
@@ -49,3 +54,4 @@ const divs = mainBoard.querySelectorAll('div')
 
 initializeGame()
 addMenuDialog('info-dialog', '.info-button')
+document.getElementById('info-dialog').showModal()

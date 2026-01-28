@@ -1,2 +1,3 @@
 mcsr-sample/
 *.py
+.env

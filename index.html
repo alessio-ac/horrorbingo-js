@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="icon" type="image/x-icon" href="favicon.png">
     <script src="js/supabase-connect.js" type="module"></script>
-    <script src="js/main.js" type="module"></script>
+    <script src="js/manual.js" type="module"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Sixtyfour&display=swap" rel="stylesheet">    <!--     <script src="js/admin.js" type="module"></script>
@@ -18,7 +18,7 @@
             <img src="horrormania_logo.png" class="logo">
             <h1 class="title">BINGO</h1>
             <a href="#" class="info-button">Come si gioca?</a>
-            <a href="manual.html">Cambia modalità  →</a>
+            <a href="auto.html">Modalità Automatica -></a>
             <p>Fatto da coldmass</p>
         </div>
         <div class="mobile">
@@ -30,7 +30,7 @@
                 <p>Fatto da COLDMASS</p>
                 <a href="#" class="info-button">Info</a>
                 <!-- <a href="#" class="settings-button">Impostazioni</a> -->
-                <a href="manual.html">Cambia Modalità →</a>
+                <a href="auto.html">Modalità Automatica -></a>
             </div>
         </div>
         <div class="board-container">
@@ -40,13 +40,15 @@
     <div id="dialog-container">
         <dialog id="info-dialog">
             <p>
-            Benvenuti al BINGO di <span class="highlight">HORRORMANIA</span>!<br><br>
-            La tabella è <span class="highlight">uguale</span> per tutti, e viene rigenerata ad ogni episodio di Horrormania.<br><br>
-            Le caselle verranno attivate <span class="highlight">automaticamente</span> ad ogni evento, se invece vuoi attivarle <span class="highlight">manualmente</span>, clicca su "<span class="highlight">cambia modalità</span>".<br>
+                Benvenuti al BINGO di <span class="highlight">HORRORMANIA</span>!<br><br>
+                La tabella è <span class="highlight">uguale</span> per tutti, e viene rigenerata ad ogni episodio di Horrormania.<br><br>
+                Puoi attivare le caselle cliccando con il tasto <span class="highlight">sinistro</span>, mentre con il <span class="highlight">destro</span> vedrai una descrizione. (Tieni premuto da mobile)<br><br>
+                Se vuoi che le caselle vengano attivate automaticamente ad ogni evento, clicca su <span class="highlight">Modalità Automatica</span>.
             </p>
         </dialog>
     </div>
     <audio src="notif2.mp3" id="tile-audio"></audio>
     <audio src="ui.wav" id="dialog-audio"></audio>
 </body>
+
 </html>

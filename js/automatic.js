@@ -28,6 +28,11 @@ async function initializeGame() {
             dialogObjects[0].showModal()
             playAudio('dialog-audio')
         })
+        tileDiv.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+            dialogObjects[0].showModal()
+            playAudio('dialog-audio')
+        })
         board.appendChild(tileDiv)
         i++
     })
