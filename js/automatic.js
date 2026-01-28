@@ -54,8 +54,7 @@ myChannel.on(
     'postgres_changes',
     { event: '*', schema: 'public', table: 'live_board' },
     payload => {
-        console.log("Realtime payload is working", Object.values(payload));
-/*         fetchData().then(tiles => displayTiles(tiles)) */
+        console.log("Realtime payload received");
         toggleTile(payload)
     } 
 )
