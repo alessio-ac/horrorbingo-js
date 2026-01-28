@@ -138,12 +138,9 @@ a {
   object-fit: contain;
 }
 
-a:link {
-  color: var(--main-bg1)
-}
-
+a:link,
 a:visited {
-  color: var(--)
+  color: var(--orchid-mist)
 }
 
 a:hover {
