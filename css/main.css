@@ -175,13 +175,14 @@ a:hover {
   padding: 10%;
 }
 
-#tile-13 {
+/* #tile-13 {
   background-color: #79046d;
   .fuse-overlay {
     display: none;
   }
 }
-
+ */
+ 
 .tile:hover {
   transform: scale(1.1);
   z-index: 10;
