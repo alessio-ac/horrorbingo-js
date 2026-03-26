@@ -6,7 +6,7 @@ const board = document.getElementById('mainBoard')
 // Fetch the board and create each element, should only be called on page load
 async function initializeGame() {
     const { data, error } = await supabase
-        .from('live_board')
+        .from('live_board_large')
         .select('tile, status, description')
         .order('id')
 
@@ -52,7 +52,7 @@ const myChannel = supabase.channel('live_board')
 
 myChannel.on(
     'postgres_changes',
-    { event: '*', schema: 'public', table: 'live_board' },
+    { event: '*', schema: 'public', table: 'live_board_large' },
     payload => {
         console.log("Realtime payload received");
         toggleTile(payload)
@@ -68,4 +68,4 @@ myChannel.on(
 
 initializeGame()
 addMenuDialog('info-dialog', '.info-button')
-document.getElementById('info-dialog').showModal()
+/* document.getElementById('info-dialog').showModal() */

@@ -1,15 +1,15 @@
 :root {
-    --main-bg1: #08225a;
-    --main-bg2: #40033c;
-    --window-bg: #110318;
-    --accent: #bd09ab;
-    --foreground: #cecece;
-    --tile-bg: #1c1c1c;
-    --ink-black: #040316ff;
-    --wisteria: #BBA9DCff;
-    --orchid-mist: #C066BEff;
-    --soft-periwinkle: #7C89E1ff;
-    --prussian-blue: #13264Aff;
+    --main-bg1: #0a3d0a;
+    --main-bg2: #1b5e1b;
+    --window-bg: #0b250b;
+    --accent: #4caf50;
+    --foreground: #e0e0e0;
+    --tile-bg: #1e1e1e;
+    --ink-black: #020402ff;
+    --wisteria: #a8d5a8ff;
+    --orchid-mist: #7fbf7fff;
+    --soft-periwinkle: #66c266ff;
+    --prussian-blue: #2b5d2bff;
   
 }
 
@@ -22,7 +22,7 @@ html {
 }
 
 body {
-    background-color: var(--window-bg);
+    background-color: #071707;
     color: var(--foreground);
 }
 
@@ -53,16 +53,90 @@ button {
     }
 }
 
+
+
+#mainBoard {
+  display: grid;
+  width: min(95vw, 80vh);
+  aspect-ratio: 1 / 1;
+  padding: 4px;
+  grid-template-columns: repeat(6, minmax(0px, 1fr));
+  flex-wrap: wrap;
+}
+
+.tile {
+  aspect-ratio: 1;
+  display: flex;
+  position: relative;
+  border: 1px solid var(--accent);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  color: var(--foreground);
+/*   font-size:calc(1vw);
+ */    /*   font-size: clamp(16px, calc(20px + (36–20) * (100vw - 768px)/(1920–768)), 48px);
+ */  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.1s ease;
+  z-index: 0;
+  background-color: var(--window-bg);
+  padding: 10%;
+}
+
+/* #tile-13 {
+  background-color: #79046d;
+  .fuse-overlay {
+    display: none;
+  }
+}
+ */
+ 
+.tile:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  border: 3px solid var(--foreground);
+}
+
+.tile[status="true"] {
+  background-color: var(--prussian-blue);
+  transition-duration: 0.1s;
+}
+
 /* Portrait */
 @media screen and (orientation:portrait) {
-    ul {
-        column-count: 1;
+  .tile {
+    font-size: 2.1vw;
+  }
+  .mobile {
+    display: block;
+  }
+  .desktop {
+    display: none
+  }
+  dialog {
+    width: 70vw;
+    font-size: 14px;
+  }
+  .main {
+    margin: 0px;
+  }
+  #info-dialog {
+    p {
+      margin: -5px
     }
+  }
 }
 
 /* Landscape */
 @media screen and (orientation:landscape) {
-    ul {
-        column-count: 2;
-    }
+  .tile {
+    font-size: clamp(16px, 1.5vh, 0px);
+  }
+  .mobile {
+    display: none;
+  }
+  #info-dialog {
+    width: 40vw;
+    font-size: clamp(18px, 2.4vh, 60px);
+  }
 }

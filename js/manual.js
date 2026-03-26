@@ -6,7 +6,7 @@ const board = document.getElementById('mainBoard')
 // Fetch the tiles from DB and create elements 
 async function initializeGame() {
     const { data, error } = await supabase
-        .from('live_board')
+        .from('live_board_large')
         .select('tile, status, description')
         .order('id')
 
@@ -36,6 +36,7 @@ async function initializeGame() {
         board.appendChild(tileDiv)
         i++
     })
+
 }
 
 async function toggleTile(tileId) {

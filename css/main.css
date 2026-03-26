@@ -152,7 +152,7 @@ a:hover {
   width: min(95vw, 80vh);
   aspect-ratio: 1 / 1;
   padding: 4px;
-  grid-template-columns: repeat(5, minmax(0px, 1fr));
+  grid-template-columns: repeat(6, minmax(0px, 1fr));
   flex-wrap: wrap;
 }
 
@@ -303,7 +303,7 @@ dialog::backdrop {
 /* Portrait */
 @media screen and (orientation:portrait) {
   .tile {
-    font-size: 2.5vw;
+    font-size: 2.1vw;
   }
   .mobile {
     display: block;
@@ -328,7 +328,7 @@ dialog::backdrop {
 /* Landscape */
 @media screen and (orientation:landscape) {
   .tile {
-    font-size: clamp(18px, 1.5vh, 0px);
+    font-size: clamp(16px, 1.5vh, 0px);
   }
   .mobile {
     display: none;
