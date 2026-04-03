@@ -44,11 +44,11 @@ async function toggleTile(payload) {
     const payloadStatus =  Object.values(payload)[4]['status']
     const tileDiv = document.getElementById("tile-" + payloadId)
     tileDiv.setAttribute("status", payloadStatus)
-    if (payloadStatus) { playAudio('tile-audio') }
+    /* if (payloadStatus) { playAudio('tile-audio') } */
 }
 
 // Realtime subscription to visually toggle the tiles 
-const myChannel = supabase.channel('live_board')
+const myChannel = supabase.channel('live_board_large')
 
 myChannel.on(
     'postgres_changes',
